@@ -34,3 +34,19 @@ export const getAllFeed = (id) => {
   })
 }
 
+export const view = (date) => {
+  return axios({
+    method: 'GET',
+    url: `${API_URL}/feeds/click_report`,
+    headers: authHeader()
+  })
+}
+
+export const generate = (date) => {
+  return axios({
+    method: 'GET',
+    url: `${API_URL}/feeds/generate_click_report.pdf`,
+    headers: authHeader()
+  })
+}
+

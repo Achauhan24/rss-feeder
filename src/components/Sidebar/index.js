@@ -33,7 +33,7 @@ class Sidebar extends Component {
 
   render() {
       const listAgency = this.state.agency_categories.map((agency_category, index)=> (
-          <li className="nav-item">
+          <li className="list-group-item" key={index}>
             <Link to={`/feeds/${agency_category.id}`}>
                 {`${agency_category.agency.name} | ${agency_category.category.name}`}
             </Link>
@@ -44,7 +44,7 @@ class Sidebar extends Component {
             <Link to={"/addCategory"} className="nav-link">
                 ADD
             </Link>
-            <ul className="nav nav-sidebar">{listAgency}</ul>
+            <div className="nav nav-sidebar list-group">{listAgency}</div>
         </div>
     );
   }

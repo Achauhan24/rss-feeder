@@ -13,7 +13,7 @@ class FeedRow extends Component{
   render (){
     const { title, link, index, clickCount, onClickLink } = this.props;
     return(
-      <div key={index}>
+      <div key={index} className="list-group-item">
         <a href={link} target="_blank" rel="noopener noreferrer" onClick={onClickLink}>{title}</a>
         {`----------------${clickCount}`}
       </div>
@@ -39,22 +39,32 @@ class Feed extends Component {
 
   componentDidMount() {
     const agency_category_id = this.props.location.pathname.split('/')[2];
+    this.fetchFeedData(agency_category_id);
+  }
+
+  fetchFeedData(agency_category_id) {
     getFeed(agency_category_id).then(
-      response => {
-        this.setState({
-          feeds: response.data.data,
-          loading: false
-        });
-      },
-      error => {
-        this.setState({
-          error:
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
-        });
-      }
+        response => {
+          this.setState({
+            feeds: response.data.data,
+            loading: false
+          });
+        },
+        error => {
+          this.setState({
+            error:
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString()
+          });
+        }
     );
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.match.params.id !== this.props.match.params.id) {
+      this.fetchFeedData(nextProps.match.params.id);
+    }
   }
 
   countClicks(e) {
@@ -100,11 +110,13 @@ class Feed extends Component {
               <p>Loading</p>
             </div> : (
               <React.Fragment>
-                <button type="button" class="btn btn-secondary btn-lg btn-block" onClick={this.handleDeleteCategory}>
+                <button type="button" className="btn btn-secondary btn-lg btn-block" onClick={this.handleDeleteCategory}>
                   Delete Category
                   </button>
                 {
-                  this._renderFeeds()
+                  <div className="list-group">
+                    { this._renderFeeds()}
+                  </div>
                 }
               </React.Fragment>
             )
