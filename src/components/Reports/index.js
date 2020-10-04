@@ -24,9 +24,9 @@ export default class Report extends Component {
             this.setState({
                 file: response.data.pdf,
             })
-            toast.success("Report Generated.", {
-                position: toast.POSITION.BOTTOM_CENTER,
-            })
+            // toast.success("Report Generated.", {
+            //     position: toast.POSITION.BOTTOM_CENTER,
+            // })
         }
       );
   }

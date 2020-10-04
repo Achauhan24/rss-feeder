@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {getFeed, increaseCount} from '../../services/feed';
+import {getFeed, increaseCount, getAllFeed} from '../../services/feed';
 import {deleteCategory} from '../../services/category'
 
 class FeedRow extends Component{
@@ -33,7 +33,6 @@ class Feed extends Component {
       loading: true,
       feeds: [],
       error: "",
-      count: 0,
     };
   }
 
@@ -44,6 +43,25 @@ class Feed extends Component {
 
   fetchFeedData(agency_category_id) {
     getFeed(agency_category_id).then(
+        response => {
+          this.setState({
+            feeds: response.data.data,
+            loading: false
+          });
+        },
+        error => {
+          this.setState({
+            error:
+                (error.response && error.response.data) ||
+                error.message ||
+                error.toString()
+          });
+        }
+    );
+  }
+
+  fetchAllFeed(category_id) {
+    getAllFeed(category_id).then(
         response => {
           this.setState({
             feeds: response.data.data,
