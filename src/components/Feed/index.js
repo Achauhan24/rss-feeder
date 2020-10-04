@@ -11,10 +11,10 @@ class FeedRow extends Component{
   }
 
   render (){
-    const { title, link, index, clickCount } = this.props;
+    const { title, link, index, clickCount, onClickLink } = this.props;
     return(
       <div key={index}>
-        <a href={link} target="_blank" rel="noopener noreferrer">{title}</a>
+        <a href={link} target="_blank" rel="noopener noreferrer" onClick={onClickLink}>{title}</a>
         {`----------------${clickCount}`}
       </div>
     )
@@ -58,10 +58,9 @@ class Feed extends Component {
   }
 
   countClicks(e) {
-    e.preventDefault();
-    increaseCount(e.target.value).then(
+    increaseCount(e).then(
       () => {
-        this.props.history.push(`/feeds/${e.target.value}`);
+        this.props.history.push(`/feeds/${this.props.location.pathname.split('/')[2]}`);
         window.location.reload();
       }
     );
@@ -86,7 +85,7 @@ class Feed extends Component {
                 title={feed.title}
                 link={feed.link}
                 clickCount={feed.click_count}
-                onClickLick={() => this.countClicks(feed.id)}
+                onClickLink={() => this.countClicks(feed.id)}
             />
         ))
     ) : <p>Oops!! No Feeds to display</p>
