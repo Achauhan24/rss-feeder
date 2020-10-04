@@ -38,6 +38,9 @@ export const view = (date) => {
   return axios({
     method: 'GET',
     url: `${API_URL}/feeds/click_report`,
+    params: {
+      date: date
+    },
     headers: authHeader()
   })
 }
@@ -45,7 +48,10 @@ export const view = (date) => {
 export const generate = (date) => {
   return axios({
     method: 'GET',
-    url: `${API_URL}/feeds/generate_click_report.pdf`,
+    url: `${API_URL}/feeds/generate_click_report`,
+    params: {
+      date: date,
+    },
     headers: authHeader()
   })
 }
