@@ -59,7 +59,7 @@ class Sidebar extends Component {
       ))
       const listCategories = this.state.categories.map((category, index)=> (
         <li className="list-group-item" key={index}>
-          <Link to="/">
+          <Link to={`/public_feeds/${category.id}`}>
               {`${category.title}`}
           </Link>
       </li>

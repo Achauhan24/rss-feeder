@@ -26,7 +26,7 @@ export const increaseCount = (id) => {
 export const getAllFeed = (id) => {
   return axios({
     method: 'GET',
-    url: `${API_URL}/feeds`,
+    url: `${API_URL}/feeds/list_all`,
     params: {
       category_id: id
     },

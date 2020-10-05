@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -8,6 +8,7 @@ import AuthService from "./services/auth-service";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import Feed from "./components/Feed/index";
+import PublicFeed from "./components/PublicFeed/index";
 import Profile from "./components/Profile";
 import Sidebar from './components/Sidebar';
 import AddCategory from "./components/AddCategory";
@@ -90,6 +91,7 @@ class App extends Component {
                   <div>
                     <Switch>
                       <Route exact path="/feeds/:id" render = { props => <Feed {...props} />} />
+                      <Route exact path="/public_feeds/:id" render = { props => <PublicFeed {...props} />} />
                       <Route exact path="/login" component={Login} />
                       <Route exact path="/register" component={Register} />
                       <Route exact path="/profile" component={Profile} />

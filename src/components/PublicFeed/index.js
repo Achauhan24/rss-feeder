@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {getFeed, increaseCount} from '../../services/feed';
-import {deleteCategory} from '../../services/category'
+import {increaseCount, getAllFeed} from '../../services/feed';
 
 class FeedRow extends Component{
   constructor(){
@@ -21,13 +20,12 @@ class FeedRow extends Component{
   }
 }
 
-class Feed extends Component {
+class PublicFeed extends Component {
   constructor(props) {
     super(props);
 
     this.countClicks = this.countClicks.bind(this);
     this._renderFeeds = this._renderFeeds.bind(this);
-    this.handleDeleteCategory = this.handleDeleteCategory.bind(this);
 
     this.state = {
       loading: true,
@@ -37,12 +35,12 @@ class Feed extends Component {
   }
 
   componentDidMount() {
-    const agency_category_id = this.props.location.pathname.split('/')[2];
-    this.fetchFeedData(agency_category_id);
+    const category_id = this.props.location.pathname.split('/')[2];
+    this.fetchAllFeed(category_id);
   }
 
-  fetchFeedData(agency_category_id) {
-    getFeed(agency_category_id).then(
+  fetchAllFeed(category_id) {
+    getAllFeed(category_id).then(
         response => {
           this.setState({
             feeds: response.data.data,
@@ -62,7 +60,7 @@ class Feed extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.match.params.id !== this.props.match.params.id) {
-      this.fetchFeedData(nextProps.match.params.id);
+      this.fetchAllFeed(nextProps.match.params.id);
     }
   }
 
@@ -73,17 +71,6 @@ class Feed extends Component {
         window.location.reload();
       }
     );
-  }
-
-  handleDeleteCategory(e) {
-    const agency_category_id = this.props.location.pathname.split('/')[2];
-
-    deleteCategory(agency_category_id).then(
-      () => {
-        this.props.history.push("/");
-        window.location.reload();
-      }
-    )
   }
 
   _renderFeeds() {
@@ -109,9 +96,6 @@ class Feed extends Component {
               <p>Loading</p>
             </div> : (
               <React.Fragment>
-                <button type="button" className="btn btn-secondary btn-lg btn-block" onClick={this.handleDeleteCategory}>
-                  Delete Category
-                  </button>
                 {
                   <div className="list-group">
                     { this._renderFeeds()}
@@ -124,4 +108,4 @@ class Feed extends Component {
     );
   }
 }
-export default Feed;
+export default PublicFeed;
